@@ -30,15 +30,7 @@
 	{ 
     //CONO SIN TRANSFORMAR:
 		
-        var altura
-            if (transformación==false)
-			{
-            altura =1;
-			}
-            else 
-			{
-			altura =3;
-			}
+        var altura = 1;
         var diametro =2;
         var lados = 10;
         var coneGeometry = new THREE.ConeGeometry(diametro,altura,lados);
@@ -50,7 +42,7 @@
         camera.lookAt(0,0,0);
 }
     //TRANSFORMACIÓN: Si es true, se aplica, si es false el cono no se transforma 
-	cono(true);
+	cono();
 	//Encuadre de luz
     var light = new THREE.PointLight(0xFFFFFF);
     light.position.set(-10,15,50);
@@ -64,7 +56,7 @@
         requestAnimationFrame(render); // Se llama al render
         renderer.render(scene, camera); // Se renderiza la escena y la camara
     }
-	cono(true);
+	cono();
     render();
 </script>
 </body>
