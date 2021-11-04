@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { margin: 0; padding: 0; font-size: 0; }
+        canvas { width: 100%; height: 100%; } 
+    </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+</script> 
+<script>
+    var WIDTH = window.innerWidth; //Tamaño del ancho de la ventana
+    var HEIGHT = window.innerHeight; //Tamaño del alto de la ventana
+
+    var renderer = new THREE.WebGLRenderer({antialias:true}); // Variable renderizador
+    renderer.setSize(WIDTH, HEIGHT); // El render se ajusta al tamaño de la ventana
+    document.body.appendChild(renderer.domElement); // Renderizar
+
+    var scene = new THREE.Scene(); // Creacion de una nueva escena 
+
+	//Creacion y posicionamiento de una camara
+    var camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 100);
+	camera.position.set(-5,5,15);
+    scene.add(camera); //Añade la camara a la escena
+   
+
+    function cono(transformación)
+	{ 
+    //CONO SIN TRANSFORMAR:
+		
+        var altura
+            if (transformación==false)
+			{
+            altura =1;
+			}
+            else 
+			{
+			altura =3;
+			}
+        var diametro =2;
+        var lados = 10;
+        var coneGeometry = new THREE.ConeGeometry(diametro,altura,lados);
+        var basicMaterial = new THREE.MeshLambertMaterial({color: 0xEAEFF2}); // Se  declara la textura del cono
+        var cone = new THREE.Mesh(coneGeometry, basicMaterial); //Se declara el nuevo cono con la geometría y el material
+        scene.add(cone);
+        cone.rotation.set(Math.PI/2, 0, 0);
+        cone.position.z=altura/2;
+        camera.lookAt(0,0,0);
+}
+    //TRANSFORMACIÓN: Si es true, se aplica, si es false el cono no se transforma 
+	cono(true);
+	//Encuadre de luz
+    var light = new THREE.PointLight(0xFFFFFF);
+    light.position.set(-10,15,50);
+    scene.add(light);
+	//Creacion y adiccion de los ejes a la escena
+    const ejesXYZ = new THREE.AxesHelper( 100 );
+    scene.add( ejesXYZ );
+
+    function render() 
+	{ // Función para renderizar
+        requestAnimationFrame(render); // Se llama al render
+        renderer.render(scene, camera); // Se renderiza la escena y la camara
+    }
+	cono(true);
+    render();
+</script>
+</body>
+</html>
